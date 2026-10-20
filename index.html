@@ -1,0 +1,1252 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tu moto | CrediMotos</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #090d16; color: #f3f4f6; line-height: 1.5; padding-bottom: 60px; }
+
+    /* HEADER & NAVBAR - GLASSMORPHISM */
+    header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: white; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .navbar { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 14px 20px; gap: 12px; }
+    @media(min-width: 640px) { .navbar { flex-direction: row; } }
+    
+    .logo { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.5px; color: #ffffff; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+    .logo span { background: linear-gradient(135deg, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+    
+    .nav-links { list-style: none; display: flex; gap: 8px; overflow-x: auto; max-width: 100%; padding-bottom: 4px; scrollbar-width: none; }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links li a { color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 0.82rem; padding: 8px 16px; border-radius: 99px; white-space: nowrap; transition: all 0.3s ease; cursor: pointer; border: 1px solid transparent; }
+    .nav-links li a:hover, .nav-links li a.active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3); }
+
+    /* HERO BANNER - ESTILO NEÓN / CYBER SPORT */
+    .hero-banner { 
+        background: radial-gradient(circle at top, rgba(37, 99, 235, 0.18) 0%, rgba(9, 13, 22, 1) 70%), 
+                    url('https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=1400&q=80') center/cover no-repeat; 
+        background-blend-mode: overlay;
+        color: white; 
+        text-align: center; 
+        padding: 65px 20px; 
+        position: relative;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .hero-banner .eyebrow { display: inline-block; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-weight: 700; letter-spacing: 1.5px; font-size: 0.75rem; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 16px; }
+    .hero-banner h1 { font-size: 2.3rem; margin-bottom: 12px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-banner p { font-size: 1rem; max-width: 580px; margin: 0 auto; color: #94a3b8; font-weight: 400; }
+
+    /* BÚSQUEDA MODERNA */
+    .search-section {
+        padding: 24px 16px 0 16px;
+        display: flex;
+        justify-content: center;
+    }
+    .search-container {
+        width: 100%;
+        max-width: 560px;
+        position: relative;
+    }
+    .search-input {
+        width: 100%;
+        padding: 14px 20px 14px 46px;
+        font-size: 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+        background-color: #111827;
+        color: #f3f4f6;
+        font-weight: 500;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .search-input:focus {
+        border-color: #3b82f6;
+        background-color: #1f2937;
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+    }
+    .search-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: #64748b;
+        pointer-events: none;
+    }
+
+    /* FILTROS DE MARCAS ESTILO PILLS */
+    .marcas-section { 
+      padding: 18px 16px; 
+    }
+
+    .marcas-container { 
+      max-width: 1000px; 
+      margin: 0 auto; 
+      display: flex; 
+      flex-wrap: wrap;           
+      justify-content: center;   
+      gap: 10px; 
+    }
+
+    .marca-btn { 
+      background: #111827; 
+      border: 1px solid rgba(255, 255, 255, 0.08); 
+      padding: 8px 18px; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      font-size: 0.78rem; 
+      color: #94a3b8; 
+      transition: all 0.25s ease; 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
+    }
+
+    .marca-btn.active, .marca-btn:hover { 
+      background: #2563eb; 
+      color: white; 
+      border-color: #3b82f6; 
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+
+    /* CONTENEDOR Y GRILLA */
+    .main-container { max-width: 1200px; margin: 10px auto 40px; padding: 0 16px; }
+    .grupo-titulo { font-size: 1.1rem; font-weight: 800; color: #f8fafc; text-transform: uppercase; letter-spacing: 1px; margin: 30px 0 16px 0; display: flex; align-items: center; gap: 10px; }
+    .grupo-titulo::before { content: ''; display: inline-block; width: 4px; height: 18px; background: #3b82f6; border-radius: 2px; }
+    .grid-motos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+
+    /* TARJETAS ESTILO DARK CARD */
+    .card { 
+        background: #111827; 
+        border-radius: 18px; 
+        padding: 20px; 
+        text-align: center; 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: space-between; 
+        border: 1px solid rgba(255, 255, 255, 0.07); 
+        transition: all 0.3s ease; 
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(59, 130, 246, 0.4); box-shadow: 0 15px 30px rgba(0,0,0,0.6); }
+    .card .marca-tag { font-size: 0.65rem; font-weight: 800; color: #3b82f6; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+    
+    .img-container { background: radial-gradient(circle, #1f2937 0%, #0f172a 100%); border-radius: 14px; padding: 14px; margin: 10px 0 14px 0; display: flex; align-items: center; justify-content: center; min-height: 180px; position: relative; cursor: zoom-in; border: 1px solid rgba(255,255,255,0.03); }
+    .card img.moto-img { max-width: 100%; max-height: 150px; object-fit: contain; filter: drop-shadow(0 10px 12px rgba(0,0,0,0.4)); transition: opacity 0.2s ease, transform 0.3s ease; }
+    .zoom-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(9, 13, 22, 0.85); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; font-size: 0.68rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; pointer-events: none; }
+
+    .card h3 { font-size: 1.15rem; color: #f8fafc; margin-bottom: 4px; font-weight: 700; }
+    .card .precio { font-size: 1.3rem; font-weight: 800; color: #60a5fa; margin-bottom: 14px; }
+
+    /* SELECTOR DE COLORES */
+    .colores-disponibles { display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; background: #0f172a; padding: 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+    .colores-disponibles span.label { font-size: 0.68rem; font-weight: 700; color: #64748b; text-transform: uppercase; width: 100%; margin-bottom: 4px; letter-spacing: 0.5px; }
+    .dot-color-wrap { position: relative; display: inline-flex; }
+    .dot-color { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #1e293b; cursor: pointer; transition: all 0.2s; }
+    .dot-color.active { border-color: #ffffff; box-shadow: 0 0 0 2px #3b82f6; transform: scale(1.2); }
+
+    .btn-cotizar { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; padding: 12px 16px; font-size: 0.85rem; font-weight: 700; border-radius: 12px; cursor: pointer; width: 100%; transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.8px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3); }
+    .btn-cotizar:hover { background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45); }
+    .btn-cotizar:active { transform: scale(0.98); }
+
+    /* SECCIONES DE CONTENIDO */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+    .content-box { background: #111827; max-width: 900px; margin: 30px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); line-height: 1.6; border: 1px solid rgba(255,255,255,0.08); }
+    .content-box h2 { color: #f8fafc; margin-bottom: 14px; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; }
+    .content-box h3 { color: #60a5fa; margin: 20px 0 10px 0; font-size: 1.1rem; }
+    .content-box p { color: #94a3b8; }
+    .content-box ul { margin-left: 20px; margin-bottom: 16px; color: #94a3b8; }
+    .content-box li { margin-bottom: 8px; }
+
+    /* MODAL DE COTIZACIÓN OVERLAY */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(3, 7, 18, 0.85); backdrop-filter: blur(8px); justify-content: center; align-items: flex-end; z-index: 99999; }
+    @media(min-width: 640px) { .modal { align-items: center; padding: 20px; } }
+    
+    .modal-content { background: #111827; padding: 24px; border-radius: 24px 24px 0 0; max-width: 480px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.1); color: #f8fafc; }
+    @media(min-width: 640px) { .modal-content { border-radius: 20px; } }
+    
+    .modal-header-nav { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; margin-bottom: 16px; }
+    .btn-atras { background: #1f2937; border: 1px solid rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 8px; font-weight: 700; color: #94a3b8; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; }
+    .close-btn { font-size: 24px; font-weight: bold; color: #64748b; cursor: pointer; line-height: 1; }
+
+    .form-group { margin-bottom: 14px; text-align: left; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: #cbd5e1; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 14px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; font-size: 0.9rem; outline: none; background: #0f172a; color: #f8fafc; }
+    .form-group input:focus, .form-group select:focus { border-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 7, 18, 0.95); z-index: 999999; align-items: center; justify-content: center; padding: 20px; flex-direction: column; }
+    .lightbox img { max-width: 100%; max-height: 80vh; border-radius: 14px; object-fit: contain; }
+    .lightbox .cerrar-lb { color: white; margin-top: 20px; background: #2563eb; border: none; padding: 10px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; }
+
+    .resumen-credito { background-color: #0f172a; border: 1px dashed rgba(59, 130, 246, 0.4); padding: 14px; border-radius: 12px; margin: 16px 0; font-size: 0.88rem; color: #cbd5e1; }
+    .resumen-credito div { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .resumen-credito .total-cuota { font-size: 1.1rem; font-weight: 800; color: #60a5fa; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; margin-top: 6px; }
+
+    /* BOTÓN WHATSAPP VERDE NEÓN */
+    .btn-whatsapp { background-color: #22c55e; color: #052e16; border: none; padding: 14px; font-size: 0.95rem; font-weight: 800; border-radius: 12px; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); text-transform: uppercase; text-decoration: none; }
+    .btn-whatsapp:hover { background-color: #16a34a; }
+    
+    .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background-color: #22c55e; color: #052e16; width: 56px; height: 56px; border-radius: 50%; text-align: center; font-size: 26px; box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4); z-index: 10000; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.2s; }
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    footer { background: #030712; color: #64748b; text-align: center; padding: 30px 16px; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    footer strong { color: #f8fafc; }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="navbar">
+        <div class="logo">Motos <span>MOTOS</span></div>
+        <ul class="nav-links">
+            <li><a class="nav-item active" onclick="navegar('inicio', this)">Catálogo</a></li>
+            <li><a class="nav-item" onclick="navegar('financiacion', this)">Financiación</a></li>
+            <li><a class="nav-item" onclick="navegar('ayuda', this)">Contacto</a></li>
+        </ul>
+    </div>
+</header>
+
+<!-- SECCIÓN CATÁLOGO -->
+<section id="inicio" class="page-section active">
+    <div class="hero-banner">
+        <div class="eyebrow">Escoge tu moto</div>
+        <h1>Estrena la moto que quieres</h1>
+        <p>Aprobación rápida, cuotas fijas y los mejores planes del mercado.</p>
+    </div>
+
+    <!-- BARRA DE BÚSQUEDA -->
+    <div class="search-section">
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Buscar por marca o modelo (ej. FZ, Pulsar, Honda)..." 
+                onkeyup="buscarMoto()"
+            >
+        </div>
+    </div>
+
+    <div class="marcas-section">
+        <div class="marcas-container">
+            <button class="marca-btn active" onclick="filtrarMarca('todas', this)">Todas</button>
+            <button class="marca-btn" onclick="filtrarMarca('bajaj Boxer', this)">Bajaj Boxer</button>
+            <button class="marca-btn" onclick="filtrarMarca('bajaj Pulsar', this)">Bajaj Pulsar</button>
+            <button class="marca-btn" onclick="filtrarMarca('Discover', this)">Discover</button>
+            <button class="marca-btn" onclick="filtrarMarca('Dominar', this)">Dominar</button>
+            >
+        </div>
+    </div>
+
+    <div class="main-container" id="mainContainer"></div>
+</section>
+
+<!-- SECCIÓN FINANCIACIÓN -->
+<section id="financiacion" class="page-section">
+    <div class="content-box">
+        <h2>🚀 Opciones </h2>
+        <p>Impulsamos tu movilidad con esquemas de financiamiento ágiles y adaptados a tus capacidades financieras. Conoce nuestras modalidades:</p>
+        
+        <h3>1. Plan Cero Estrés (Sin Cuota Inicial)</h3>
+        <p>Disfruta de tu motocicleta al instante sin necesidad de desembolsos iniciales. Cubrimos el 100% del valor del vehículo con cuotas fijas sumamente cómodas.</p>
+        
+        <h3>2. Plan Inversión Parcial (Con Cuota Inicial)</h3>
+        <p>Realiza un aporte inicial a tu elección; esto disminuye directamente el capital a financiar y optimiza de manera notable el valor de tus mensualidades.</p>
+
+        <h3>📋 Documentación Exigida:</h3>
+        <ul>
+            <li>Documento de identidad ampliado al 150% (ambas caras).</li>
+            <li>Historial crediticio favorable (o alternativa con codeudor que posea propiedad raíz).</li>
+            <li>Soporte de ingresos o extractos de cuenta correspondientes al último trimestre.</li>
+        </ul>
+
+        <h3>⚙️ Parámetros Financieros:</h3>
+        <ul>
+            <li><strong>Interés Ordinario:</strong> 0.5% M.V. (Mes Vencido sobre saldos).</li>
+            <li><strong>Períodos de Financiación:</strong> Escoge entre 12, 24, 36, 48 o 60 cuotas mensuales.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- SECCIÓN CONTRATO -->
+<section id="contrato" class="page-section">
+    <div class="content-box">
+        <h2>📄 Contrato y Garantía de Crédito</h2>
+        <p>Brindamos total transparencia y seguridad jurídica en cada uno de nuestros planes de crédito.</p>
+
+        <h3>🔒 Garantías de Servicio:</h3>
+        <ul>
+            <li><strong>Cuotas Fijas:</strong> Tu cuota mensual nunca cambiará durante toda la vigencia de tu crédito.</li>
+            <li><strong>Sin Penalizaciones:</strong> Puedes hacer abonos extraordinarios a capital o cancelar tu crédito anticipadamente sin ningún tipo de cobro adicional.</li>
+            <li><strong>Seguro Todo Riesgo:</strong> Todas nuestras motos cuentan con opción de póliza de seguro ante robo y daños a terceros.</li>
+        </ul>
+
+        <h3>📝 Firma y Formalización:</h3>
+        <p>Disfruta de tu moto.</p>
+    </div>
+</section>
+
+<!-- SECCIÓN AYUDA -->
+<section id="ayuda" class="page-section">
+    <div class="content-box">
+        <h2>💬 Atención y Soporte al Cliente</h2>
+        <p>¿Tienes dudas sobre tu solicitud o deseas asesoría personalizada con uno de nuestros ejecutivos?</p>
+        <br>
+        <a class="btn-whatsapp" href="https://wa.me/55732665445" target="_blank">
+            💬 Hablar directamente por WhatsApp
+        </a>
+    </div>
+</section>
+
+<footer>
+    <p><strong>Tu moto</strong> — Crédito Directo Colombia</p>
+</footer>
+
+<!-- BOTÓN FLOTANTE PERMANENTE DE WHATSAPP -->
+<a href="https://wa.me/5732665445?text=Hola,%20me%20gustaria%20recibir%20información%20sobre%20los%20creditos%20de%20motos" class="whatsapp-float" target="_blank" title="Contacto directo por WhatsApp">
+    💬
+</a>
+
+<!-- MODAL DE COTIZACIÓN -->
+<div class="modal" id="modalCotizacion">
+    <div class="modal-content">
+        <div class="modal-header-nav">
+            <button class="btn-atras" onclick="cerrarModal()">⬅️ Regresar</button>
+            <span class="close-btn" onclick="cerrarModal()">&times;</span>
+        </div>
+
+        <h2 id="modalTitulo" style="color:#f8fafc; margin-bottom:2px; font-size:1.2rem;">Solicitar Crédito</h2>
+        <p id="modalPrecioTexto" style="color:#94a3b8; font-size:0.85rem; margin-bottom:14px; font-weight:600;"></p>
+
+        <form id="formCotizacion" onsubmit="enviarWhatsApp(event)">
+            <div class="form-group">
+                <label>Nombre Completo:</label>
+                <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+            </div>
+            <div class="form-group">
+                <label>Número de Cédula:</label>
+                <input type="number" id="cedula" placeholder="Ej: 1020304050" required>
+            </div>
+            <div class="form-group">
+                <label>Color de Preferencia:</label>
+                <select id="colorMoto" required></select>
+            </div>
+
+            <div class="form-group">
+                <label>¿Deseas dar Cuota Inicial?</label>
+                <select id="disponeCuota" onchange="calcularCredito()" required>
+                    <option value="Si">Sí (Abonar Inicial)</option>
+                </select>
+            </div>
+            <div class="form-group" id="grupoCuota" style="display:none;">
+                <label>Monto de la Inicial (COP):</label>
+                <input type="number" id="montoCuota" value="0" oninput="calcularCredito()">
+            </div>
+            <div class="form-group">
+                <label>Plazo Financiación:</label>
+                <select id="plazoMeses" onchange="calcularCredito()">
+                    <option value="12">12 Meses</option>
+                    <option value="24">24 Meses</option>
+                    <option value="36" selected>36 Meses</option>
+                    <option value="48">48 Meses</option>
+                    <option value="60">60 Meses</option>
+                </select>
+            </div>
+
+            <div class="resumen-credito">
+                <div><span>Valor Moto:</span><span id="resValorMoto">$0</span></div>
+                <div><span>Abono Inicial:</span><span id="resCuotaInicial">$0</span></div>
+                <div><span>Monto a Financiar:</span><span id="resMontoFinanciar">$0</span></div>
+                <div class="total-cuota"><span>Cuota Mensual:</span><span id="resCuotaMensual">$0</span></div>
+            </div>
+
+            <button type="submit" class="btn-whatsapp">📲 ENVIAR SOLICITUD POR WHATSAPP</button>
+        </form>
+    </div>
+</div>
+
+<!-- LIGHTBOX PARA VER FOTO AGRANDADA -->
+<div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
+    <img id="lightboxImg" src="" alt="Moto Zoom">
+    <button class="cerrar-lb">Cerrar Vista</button>
+</div>
+
+<script>
+const NUMERO_TELEFONO = "575732665445";
+const TASA_INTERES = 0.005;
+
+const catalogo = [
+  { grupo:'Bajaj Boxer ', brand:'bajaj Boxer', motos:[
+      { id:'Boxer CT100 KS', name:'Boxer CT100 KS', price:5899000, 
+        colors:[
+        {name:'Negro', hex:'#000000', img:'./boxerct100negra.png'},
+        {name:'Rojo', hex: '#dc2626', img: './boxerct100roja.png' },
+        {name:'Azul', hex:'#1d4ed8', img:'./boxerct100azul.png'},
+        {name:'Gris', hex:'#64748b', img:'./boxerct100gris.png'},
+        {name:'Amarillo', hex:'#eab308', img:'./boxerct100amarillo.png'}
+        ] 
+      },
+      { id:'Boxer CT100 ES Boxer Racing', name:'Boxer CT100 ES Boxer Racing', price:6399000, 
+        colors:[
+        {name:'Negro/Rojo', hex:'#000000', img:'./Boxer CT100 ES Boxer Racingnegrorojo.png'},
+        {name:'Gris', hex:'#64748b', img:'./Boxer CT100 ES Boxer Racingnegrogris.png'}
+        ] 
+      },
+
+      { id:'Boxer CT100 KS Racing', name:'Boxer CT100 KS Racing', price:5999000, 
+        colors:[
+        {name:'Negro/Rojo', hex:'#000000', img:'./Boxer CT100 KS Boxer Raciningnegra-rojo.png'},
+        {name:'Gris', hex:'#64748b', img:'./CT100-KS-Boxer-Racining-gris.png'}
+        ] 
+      },
+      { id:'Boxer CT100 ES', name:'Boxer CT100 ES', price:6199000, 
+        colors:[
+        {name:'Negro', hex:'#000000', img:'./Boxer-CT100-ESnegro.png'},
+        {name:'Rojo', hex: '#dc2626', img: './Boxer-CT100-ESroja.png' },
+        {name:'Azul', hex: '#1d4ed8', img: './Boxer-CT100-ESazul.png' },
+        {name:'Morado', hex: '#581c87', img: './boxerct100morado.png' }
+        ] 
+      },
+      
+      ]},
+
+       { grupo:'bajaj Pulsar', brand:'bajaj Pulsar', motos:[
+      { id:'Pulsar N125 Carburada', name:'Pulsar N125 Carburada', price:7599000, 
+        colors:[
+        {name:'Morado', hex: '#581c87', img:'./Pulsar N125 Carburadamorda.png'},    
+        {name:'Verde', hex:'#15803d', img:'./Pulsar N125 Carburadaverde.png'},
+        {name:'Rojo', hex: '#dc2626', img: './Pulsar N125 Carburadaroja.png' }
+    ]
+      },
+     { id:'Pulsar N125 FI', name:'Pulsar N125 FI', price:8099000, 
+        colors:[
+        {name:'Gris', hex:'#64748b', img:'./Pulsar N125 FIgris.png'},
+        {name:'Morado', hex: '#581c87', img:'./Pulsar N125 FImorado.png'},    
+        {name:'Verde', hex:'#15803d', img:'./Pulsar N125 FIverde.png'},
+        {name:'Rojo', hex: '#dc2626', img: './Pulsar N125 FIrojo.png' }
+      ]
+      },
+
+      { id:'Pulsar N160 Pro', name:'Pulsar N160 Pro', price:10999000, 
+        colors:[
+        {name:'Negro', hex:'#000000', img:'./Pulsar N160 Pronegro.png'},   
+        {name:'Azul Petroleo', hex:'#0f4c81', img:'./Pulsar N160 Proazulpetroleo.png'},     
+        {name:'Morado', hex: '#581c87', img:'./Pulsar N125 Carburadamorda.png'},  
+        {name:'Gris', hex:'#64748b', img:'./Pulsar N160 Progris.png'},
+        {name:'Negro Cristal', hex:'#111827', img:'./Pulsar N160 Pronegrocristal.png'}
+      ]
+      },
+
+      { id:'Pulsar NS 125', name:'Pulsar NS 125', price:8799000, 
+        colors:[
+        {name:'Negro Cristal', hex:'#111827', img:'./Pulsar NS 125negra.png'},    
+        {name:'Verde', hex:'#15803d', img:'./Pulsar NS 125rojo.png'},
+        {name:'Azul', hex:'#1d4ed8', img:'./Pulsar NS 125azul.png'}, 
+      ]
+      },
+
+      { id:'Pulsar NS 160 Fi ABS', name:'Pulsar NS 160 Fi ABS', price:11199000, 
+        colors:[
+        {name:'Rojo Merlot', hex: '#800020', img: './Pulsar NS 160 Fi ABSrojomerlot.png' },
+        {name:'Gris Onix', hex:'#334155', img:'./Pulsar NS 160 Fi ABSGris Onix.png'},
+        {name:'Negro Zafiro', hex:'#0f172a', img: './Pulsar NS 160 Fi ABSnegrozafiro.png' },
+        {name:'Negro Cristal',hex:'#000000', img:'./Pulsar NS 160 Fi ABSnegrocristal.png'}
+      ]
+      },
+
+      { id:'Pulsar NS200 FI ABS DC', name:'Pulsar NS200 FI ABS DC', price:15799000, 
+        colors:[
+        {name:'Mercury Blue', hex: '#0284c7', img: './Pulsar NS200 FI ABS DCMercury Bluet.png'},
+        {name:'Rojo Merlot', hex: '#800020', img: './Pulsar NS200 FI ABS DCRojo Merlot.png' },
+        {name:'Gris Onix', hex:'#334155', img:'./Pulsar NS200 FI ABS DCGris Onix.png'},
+        {name:'Negro Zafiro', hex:'#0f172a', img:'./Pulsar NS200 FI ABS DCNegro Zafiro.png' },
+        {name:'Negro Cristal',hex:'#000000', img:'./Pulsar NS200 FI ABS DCNegro Cristal.png'}
+    ]
+      },
+
+      { id:'Pulsar NS200 FI ABS SC', name:'Pulsar NS200 FI ABS SC', price:13199000, 
+        colors:[
+        {name:'Mercury Blue', hex: '#0284c7', img: './Pulsar NS200 FI ABS SCMercury Bluet.png'},
+        {name:'Rojo Merlot', hex: '#800020', img: './Pulsar NS200 FI ABS SCRojo Merlot.png' },
+        {name:'Gris Onix', hex:'#334155', img:'./Pulsar NS200 FI ABS SCGris Onix.png'},
+        {name:'Negro Zafiro', hex:'#0f172a', img:'./Pulsar NS200 FI ABS SCNegro Zafiro.png' }
+    ]
+      },
+
+      { id:'Pulsar NS400Z', name:'Pulsar NS400Z', price:18299000, 
+        colors:[
+        {name:'Blanco Metalizado', hex:'#f8fafc', img: './Pulsar NS400ZBlanco metalizado.png'},
+        {name:'Rojo Racing', hex: '#dc2626', img: './Pulsar NS400ZRojo Rancing.png' },
+        {name:'Gris Mercurio', hex:'#94a3b8', img:'./Pulsar NS400ZGris Mercurio.png'},
+        {name:'Negro Cristal',hex:'#000000', img:'./Pulsar NS400ZNegro Cristal.png'}
+    ]
+      },
+
+      { id:'Pulsar P150', name:'Pulsar P150', price:8999000, 
+        colors:[
+        {name:'Azul', hex: '#1d4ed8', img: './Pulsar P150Azul.png'},   
+        {name:'Gris', hex:'#cbd5e1', img:'./Pulsar P150Grisclaro.png'},
+        {name:'Gris Mercurio', hex:'#64748b', img:'./Pulsar P150grisoscuro.png'},
+    ]
+      },
+
+      { id:'Pulsar RS 200 FI ABS', name:'Pulsar RS 200 FI ABS', price:15999000, 
+        colors:[
+        {name:'Blanco Metalizado', hex:'#f8fafc', img: './Pulsar RS 200 FI ABSBlanco metalizado.png'},
+        {name:'Rojo', hex: '#dc2626', img: './Pulsar RS 200 FI ABSRojo.png' },
+        {name:'Negro',hex:'#000000', img:'./Pulsar RS 200 FI ABSNegro.png'}
+    ]
+      },
+      ]},
+
+   { grupo:'Discover', brand:'Discover', motos:[
+      { id:'Discover 125 SPORT', name:'Discover 125 SPORT', price:6999000, 
+        colors:[
+        {name:'Naranja', hex: '#ea580c' , img:'./Discover 125 SPORTNaranja.png ' },  
+        {name:'Azul Mercurio', hex: '#0284c7', img: './Discover 125 SPORTAzul mercurio.png'},   
+        {name:'Azul', hex: '#1d4ed8', img:'./Discover 125 SPORTazul.png '},
+        {name:'Amarillo', hex: '#eab308' , img:'./Discover 125 SPORTamarilo.png ' }
+         ] 
+      },
+     ]},
+
+      { grupo:'Dominar', brand:'Dominar', motos:[
+      { id:'Dominar 250', name:'Dominar 250', price:15799900, 
+        colors:[
+        {name:'Negro Mate', hex:'#1e293b', img:'./Dominar 250negromate.png' },
+        {name:'Negro Cristal',hex:'#000000', img:'./Dominar 250negro.png'}
+     ] 
+      },
+
+       { id:'Dominar 400 Touring', name:'Dominar 400 Touring', price:19399000, 
+        colors:[
+        {name:'Azul', hex: '#1d4ed8', img: './Dominar 400 TouringAzul.png'},
+        {name:'Negro',hex:'#000000', img:'./Dominar 400 Touringnegro.png'}
+     ] 
+      },
+
+       { id:'Dominar 400 Volcano', name:'Dominar 400 Volcano', price:20399000, 
+        colors:[
+        {name:'Negro',hex:'#000000', img:'./Dominar 400 VolcanoNEGRO.png'}
+     ] 
+     },
+     ]},
+
+  { grupo:'AKT', brand:'akt', motos:[
+      { id:'NKD 125 FP', name:'NKD 125 FP', price:5890000, 
+        colors:[
+           {name:'Negro',hex:'#000000', img:'./NKD 125 FPnegro.png'}
+    ] 
+     },
+
+      { id:'NKD 125', name:'NKD 125', price:4890000, 
+        colors:[
+        {name:'Gris', hex:'#64748b', img:'./NKD 125gris.png'},
+        {name:'Negro Mate', hex:'#1e293b', img:'./NKD 125negro.png' },
+        {name:'Negro Brillante',hex:'#000000', img:'./NKD 125negrobrillante.png'},
+        {name:'Blanco', hex:'#f8fafc', img: './NKD 125blanco.png'},
+        {name:'Gris Base', hex:'#94a3b8', img:'./NKD 125grisbase.png'}
+     ] 
+      },
+       { id:'NKD 125 Classic', name:'NKD 125 Classic', price:5490000, 
+        colors:[
+           {name:'Negro',hex:'#000000', img:'./NKD 125 Classicnegro.png'}
+    ] 
+     },
+
+     { id:'CHR 125', name:'CHR 125', price:5490000, 
+        colors:[
+        {name:'Negro', hex:'#000000', img:'./CHR 125negro.png'},
+        {name:'Rojo', hex: '#dc2626', img: './CHR 125roja.png' },
+        {name:'Azul', hex: '#1d4ed8', img: './CHR 125azul.png' }
+        ] 
+      },
+
+      { id:'CR4 150', name:'CR4 150', price:6999000, 
+        colors:[
+        {name:'Gris', hex:'#475569', img:'./CR4 150gris.png' },
+        {name:'Negro Brillante',hex:'#000000', img:'./CR4 150negro.png'}
+     ] 
+      },
+
+      { id:'AKT 250 R', name:'AKT 250 R', price:11590000, 
+        colors:[
+        {name:'Gris Base', hex:'#475569', img:'./AKT 250 Rgris.png' },
+        {name:'Negro Verde',hex:'#0f172a', img:'./AKT 250 Rnegroverde.png'}
+    ] 
+     },
+
+      { id:'CR4 125', name:'CR4 125', price:6590000, 
+        colors:[
+        {name:'Gris', hex:'#475569', img:'./CR4 125gris.png' },
+        {name:'Negro Brillante',hex:'#000000', img:'./CR4 125negro.png'}
+    ] 
+     },
+
+     { id:'CR4 200 Pro', name:'CR4 200 Pro', price:8590000, 
+        colors:[
+        {name:'Negro Mate', hex:'#1e293b', img:'./CR4 200 Pronegromate.png' },
+        {name:'Gris', hex:'#64748b', img:'./CR4 200 Progris.png' },
+        {name:'Negro Brillante',hex:'#000000', img:'./CR4 200 Pronegrobrillante.png'}
+    ] 
+     },
+
+     { id:'AKT TTR 125', name:'AKT TTR 125', price:7390000, 
+        colors:[
+        {name:'Negro', hex:'#1e293b', img:'./TTR 125 NEGRA.png' },
+        {name:'Blanca', hex:'#ffffff', img:'./TTR 125 BLANCA.png' }
+    ] 
+     },
+
+     { id:'AKT TTR 200', name:'AKT TTR 200', price:9190000, 
+        colors:[
+        {name:'Negro', hex:'#1e293b', img:'./TTR 200 NEGRA.png' },
+        {name:'Blanca', hex:'#ffffff', img:'./TTR 200 BLANCA.png' }
+    ] 
+     },
+
+     { id:'AKT TTR 125 VERDE MILITAR', name:'AKT TTR 125 VERDE MILITAR', price:7800000, 
+        colors:[
+        {name:'Verde Militar', hex:'#4B5320', img:'./ttr 125 verde militar.png' }
+    ] 
+     },
+
+      { id:'AKT TTR 200 ABS VERDE MILITAR', name:'AKT TTR 200 ABS VERDE MILITAR', price:9390000, 
+        colors:[
+        {name:'Verde Militar', hex:'#4B5320', img:'./TTR 200 ABS VERDE.png' }
+    ] 
+     },
+
+      { id:'AKT TT200 Rally', name:'AKT TT200 Rally', price:10590000, 
+        colors:[
+        {name:'Verde', hex:'#4B5320', img:'./TT200 RALLY VERDE MILITAR.png' }
+    ] 
+     },
+
+     { id:'AKT RALLY 300 ', name:'AKT RALLY 300', price:17590000, 
+        colors:[
+        {name:'Negro', hex:'#000000', img:'./rally 300 negro.png' },
+        {name:'Gris Mate', hex:'#64748b', img:'./RALLY 300 GRIS MATE.png' },
+        {name:'Gris Brillante',hex:'#E8E9EB', img:'./rally 300 gris brillante.png'}
+    ] 
+     },
+
+     { id:'AKT DS 300', name:'AKT DS 300', price:15590000, 
+        colors:[
+        {name:'Gris', hex:'#64748b', img:'./DS 300 GRIS.png' },
+        {name:'Negro',hex:'#000000', img:'./DS 300 NEGRO.png'}
+    ] 
+     },
+
+      { id:'TT200 con ABS', name:'TT200 con ABS', price:9790000, 
+        colors:[
+        {name:'Blanca', hex:'#ffffff', img:'./TT200 con ABS blanca.png' },
+        {name:'Negro', hex:'#000000', img:'./TT200 con ABS negra mate.png' }
+    ] 
+     },
+     ]},
+
+  { grupo:'AKT Automatica', brand:'AKT Automatica', motos:[
+     { id:'XRS 180', name:'XRS 180', price:13990000, 
+    colors:[
+    {name:'Negro',hex:'#000000', img:'./XRS 180negro.png'},
+    {name:'Gris', hex:'#64748b', img:'./XRS 180gris.png' },
+    {name:'Blanco', hex:'#f8fafc', img: './XRS 180Blanco.png'}
+    ] 
+     },
+
+      { id:'Dynamic RX Fi', name:'Dynamic RX Fi', price:9490000, 
+        colors:[
+        {name:'Gris', hex:'#64748b', img:'./Dynamic RX Figris.png'},
+        {name:'Negro Brillante',hex:'#000000', img:'./Dynamic RX Finegrobrillante.png'},
+        {name:'Plata', hex:'#cbd5e1', img: './Dynamic RX Fiblanco.png'}
+     ] 
+      },
+
+      { id:'Dynamic Pro CBS', name:'Dynamic Pro CBS',price:8090000, 
+        colors:[
+        {name:'Gris', hex:'#64748b', img:'./Dynamic Pro CBSgris.png'},
+        {name:'Negro Mate', hex:'#1e293b', img:'./Dynamic Pro CBSnegromate.png' },
+        {name:'Negro Cristal',hex:'#000000', img:'./Dynamic Pro CBSnegro.png'}
+     ] 
+      },
+
+      { id:'Jet Evo', name:'Jet Evo',price:12590000, 
+        colors:[
+        {name:'Gris', hex:'#64748b', img:'./Jet Evogris.png'},
+        {name:'Negro Mate', hex:'#1e293b', img:'./Jet Evonegromate.png' }
+      ] 
+      },
+
+       { id:'Special 110 X', name:'Special 110 X',price:4999000, 
+        colors:[
+        {name:'Gris', hex:'#64748b', img:'./Special 110 Xgris.png'},
+        {name:'Azul', hex: '#1d4ed8', img: './Special 110 Xazul.png' },
+        {name:'Negro Verde', hex:'#1e293b', img:'./Special 110 Xnegroverde.png' }
+     ] 
+      },
+
+      { id:'Flex 125', name:'Flex 125',price:5890000, 
+        colors:[
+        {name:'Azul', hex: '#1d4ed8', img: './Flex 125azul.png' },
+        {name:'Negro Azul', hex:'#1e293b', img:'./Flex 125negroazul.png' },
+        {name:'Negro Cristal',hex:'#000000', img:'./Flex 125negro.png'}
+     ] 
+      },
+ ]},
+
+ { grupo:'TVS', brand:'TVS', motos:[
+     { id:'RAIDER 125', name:'RAIDER 125', price:7299000, 
+    colors:[
+    {name:'Negra Nebulosa',hex:'#000000', img:'./RAIDER 125NEGRA NEBULOSA.png'},
+    {name:'Verde Slate',hex:'#2d5a27', img:'./RAIDER 125VERDE SLATE.png'}
+     ] 
+     },
+
+    { id:'RAIDER 125 RACING', name:'RAIDER 125 RACING', price:7549000, 
+    colors:[
+    {name:'Azul Petróleo / Dorado',hex:'#0f4c81', img:'./RAIDER 125 RACINGAZUL PETRÓLEO- DORADO.png'},
+    {name:'Gris California / Rojo',hex:'#64748b', img:'./RAIDER 125 RACINgGRIS CALIFORNIA ROJO.png'}
+     ] 
+     },
+
+     { id:'RAIDER 125 FI', name:'RAIDER 125 FI', price:7549000, 
+    colors:[
+    {name:'Negro Nebulosa / Gris',hex:'#000000', img:'./RAIDER 125 FINEGRO NEBULOSA- GRIS.png'},
+    {name:'Gris California / Dorado',hex:'#64748b', img:'./RAIDER 125 FIGRIS CALIFORNIA DORADO.png'}
+     ] 
+     },
+
+    { id:'APACHE 160 CARBURADA ABS', name:'APACHE 160 CARBURADA ABS', price:9299000, 
+    colors:[
+    {name:'Negro Nebulosa / Verde',hex:'#000000', img:'./APACHE 160 CARBURADA ABSNEGRO NEBULOSA - VERDE.png'},
+    {name:'Gris Humo',hex:'#64748b', img:'./APACHE 160 CARBURADA ABSGRISHUMO.png'}
+     ] 
+     },
+
+     { id:'APACHE RTR 160 4V XC FI', name:'APACHE RTR 160 4V XC FI', price:9999999, 
+    colors:[
+    {name:'Negro Nebulosa / Roja',hex:'#000000', img:'./APACHE RTR 160 4V XC FINEGRO NEBULOSA - ROJA.png'},
+    {name:'Gris Grafito / Azul',hex:'#475569', img:'./APACHE RTR 160 4V XC FIGRIS GRAFITO - AZUL.png'}
+     ] 
+     },
+
+     { id:'APACHE RTR 160 4V XC FI RACING', name:'APACHE RTR 160 4V XC FI RACING', price:10299000, 
+    colors:[
+    {name:'Azul Cuarzo',hex:'#1d4ed8', img:'./APACHE RTR 160 4V XC FI RACINGAZUL CUARZO.png'},
+    {name:'Gris Humo',hex:'#64748b', img:'./APACHE RTR 160 4V XC FI RACINGGRIS HUMO.png'}
+     ] 
+     },
+
+     { id:'APACHE 160 FI NG', name:'APACHE 160 FI NG', price:11499999, 
+    colors:[
+    {name:'Negro Nebulosa / Roja',hex:'#000000', img:'./APACHE 160 FI NGNEGRO NEBULOSA - ROJA.png'}
+     ] 
+     },
+
+     { id:'APACHE 160 FI ABS EDICIÓN ESPECIAL', name:'APACHE 160 FI ABS EDICIÓN ESPECIAL', price:10649000, 
+    colors:[
+    {name:'Azul Cuarzo',hex:'#1d4ed8', img:'./APACHE 160 FI ABS EDICIÓN ESPECIALAZUL CUARZO.png'},
+    {name:'Blanco Celestial / Azul', hex:'#f8fafc', img: './APACHE 160 FI ABS EDICIÓN ESPECIALBLANCO CELESTIAL- AZUL.png'},
+    {name:'Gris Humo',hex:'#64748b', img:'./APACHE 160 FI ABS EDICIÓN ESPECIALGRIS HUMO.png'}
+     ] 
+     },
+
+     { id:'APACHE 200 CARBURADA ABS', name:'APACHE 200 CARBURADA ABS', price:11799000, 
+    colors:[
+    {name:'Negro Nebulosa / Dorado',hex:'#000000', img:'./APACHE 200 CARBURADA ABSNEGRO NEBULOSA - DORADO.png'},
+    {name:'Top Frost / Rojo',hex:'#dc2626', img:'./APACHE 200 CARBURADA ABSTOP FROST - ROJO.png'}
+     ] 
+     },
+
+    { id:'APACHE RTR 200 4V XC FI ABS', name:'APACHE RTR 200 4V XC FI ABS', price:12599000, 
+    colors:[
+    {name:'Azul Cuarzo',hex:'#1d4ed8', img:'./APACHE RTR 200 4V XC FI ABSAZUL CUARZO.png'},
+    {name:'Gris Grafito',hex:'#475569', img:'./APACHE RTR 200 4V XC FI ABSGRIS GRAFITO.png'},
+    {name:'Negro Nebulosa / Roja',hex:'#000000', img:'./APACHE RTR 200 4V XC FI ABSNEGRO NEBULOSA.png'}
+     ] 
+     },
+
+     { id:'APACHE 200 FI EDICIÓN ESPECIAL', name:'APACHE 200 FI EDICIÓN ESPECIAL', price:12899000, 
+    colors:[
+    {name:'Negro Nebulosa / Blanca',hex:'#000000', img:'./APACHE 200 FI EDICIÓN ESPECIALNEGRO NEBULOSA - BLANCA.png'}
+    ]
+     }, 
+     
+     { id:'RONIN 225 TD', name:'RONIN 225 TD', price:13999000, 
+    colors:[
+    {name:'Gris Negro',hex:'#475569', img:'./RONIN 225 TDGRIS NEGRO.png'},
+    {name:'Naranja',hex:'#ea580c', img:'./RONIN 225 TDNARANJA.png.png'}
+    ]
+     }, 
+
+     { id:'Apache 200 FI NG', name:'Apache 200 FI NG', price:14999000, 
+    colors:[
+    {name:'Negro Nebulosa / Roja',hex:'#000000', img:'./Apache 200 FI NGNEGRO NEBULOSA -ROJA.png'}
+    ]
+     }, 
+     
+    { id:'APACHE RTR 310', name:'APACHE RTR 310', price:27799000, 
+    colors:[
+    {name:'Amarillo Furia / Negra',hex:'#eab308', img:'./APACHE RTR 310AMARILLO FURIA - NEGRA.png'},
+    {name:'Negro Rojo',hex:'#000000', img:'./APACHE RTR 310NEGRO ROJO.png'}
+    ]
+     }, 
+
+    { id:'APACHE RTR 310 PRM', name:'APACHE RTR 310 PRM', price:29499000, 
+    colors:[
+    {name:'Blanco Azul Rojo',hex:'#1d4ed8', img:'./APACHE RTR 310BLANCO AZUL ROJO.png'},
+    {name:'Negro Rojo',hex:'#000000', img:'./APACHE RTR 310 PRMNEGRO ROJO.png'}
+    ]
+     }, 
+
+ ]},
+
+ { grupo:'YAMAHA', brand:'YAMAHA', motos:[
+  { id:'XTZ150', name:'XTZ150', price:14500000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./XTZ150negra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./XTZ150azul.png'},
+    {name:'Blanco', hex:'#f8fafc', img: './XTZ150blanco.png'},
+    {name:'Café', hex:'#78350f', img: './XTZ150Cafe.png'}
+    ] 
+    },
+
+    { id:'XTZ250', name:'XTZ250', price:25900000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./XT250negra.png'},
+    {name:'Blanco', hex:'#f8fafc', img: './XTZ250blanco.png'},
+    {name:'Rojo', hex:'#dc2626', img: './XTZ250Rojo.png'}
+    ] 
+    },
+
+    { id:'FZ VERSIÓN 3.0', name:'FZ VERSIÓN 3.0', price:11800000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./FZ VERSIÓN 3.0negra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./FZ VERSIÓN 3.0azul.png'},
+    {name:'Gris', hex:'#64748b', img:'./FZ VERSIÓN 3.0gris.png'}
+    ] 
+    },
+
+    { id:'FZ25 ABS', name:'FZ25 ABS', price:15300000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./FZ25 ABSnegra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./FZ25 ABSazul.png'},
+    {name:'Verde', hex:'#15803d', img:'./FZ25 ABSverde.png'}
+    ] 
+    },
+
+    { id:'MT15', name:'MT15', price:15500000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./MT15negra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./MT15Azul.png'},
+    {name:'Gris', hex:'#64748b', img:'./MT15gris.png'},
+    {name:'Naranja',hex:'#ea580c', img:'./MT15naranja.png'}
+    ] 
+    },
+
+    { id:'MT03', name:'MT03', price:31900000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./Mt03_2025_negra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./MT03azul.png'},
+    {name:'Gris', hex:'#64748b', img:'./MT03gris.png'}
+    ] 
+    },
+    
+    { id:'MT09', name:'MT09', price:63000000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./MT09negra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./MT09azul.png'},
+    {name:'Gris', hex:'#64748b', img:'./MT09gris.png'}
+    ] 
+    },
+
+    { id:'MT09 SP', name:'MT09 SP', price:73000000, 
+    colors:[
+    {name:'Gris', hex:'#64748b', img:'./MT09SPgris.png'}
+    ] 
+    },
+
+     { id:'YAMAHA TTR110', name:'YAMAHA TTR110', price:14700000, 
+    colors:[
+    {name:'Azul', hex:'#0000ff', img:'./ttr110 YAMAHA.png'}
+    ] 
+    },
+    
+    { id:'TTR50', name:'TTR50', price:7800000, 
+    colors:[
+    {name:'Azul', hex:'#1d4ed8', img:'./TTR50azul.png'}
+    ] 
+    },
+     ]},
+
+    { grupo:'honda', brand:'honda', motos:[
+
+    { id:'CB 100 2027', name:'CB 100 2027', price:5700000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./CB 100 2027negra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./CB 100 2027azul.png'},
+    {name:'Rojo', hex: '#dc2626', img: './CB 100 2027roja.png' }
+    ] 
+    },
+
+    { id:'CB 125F DLX 2027', name:'CB 125F DLX 2027', price:6499000, 
+    colors:[
+    {name:'Rojo', hex:'#dc2626', img:'./CB 125F DLX 2027rojo.png'},
+    {name:'Gris', hex:'#64748b', img:'./CB 125F DLX 2027gris.png'}
+    ] 
+    },
+
+    { id:'CB 125F STD', name:'CB 125F STD', price:6890000, 
+    colors:[
+    {name:'Rojo', hex:'#dc2626', img:'./honda-cb125f-std-rojo.webp'},
+    {name:'Negro', hex:'#000000', img:'./honda-cb125f-std-negro.webp'}
+    ] 
+    },
+
+    { id:'CB 190R 2.0 2027', name:'CB 190R 2.0 2027', price:12499000, 
+    colors:[
+    {name:'Rojo', hex:'#dc2626', img:'./CB 190R 2.0 2027rojo.png'},
+    {name:'Negro', hex:'#000000', img:'./CB 190R 2.0 2027negro.png'}
+    ] 
+    },
+
+     { id:'CB 300F 2027', name:'CB 300F 2027', price:16800000, 
+    colors:[
+    {name:'Rojo', hex:'#fe0000', img:'./Nueva-CB-300F-rojo_3.webp'},
+    {name:'Azul Mate', hex:'#6577b3', img:'./Nueva-CB-300F-azul-mate_3.webp'},
+    {name:'Gris Mate', hex:'#898989', img:'./gris-mate-CB300F_3 (1).webp'}
+    ] 
+    },
+
+
+    { id:'XR 150L 2.0 2027', name:'XR 150L 2.0 2027', price:10190000, 
+    colors:[
+    {name:'Roja', hex:'#dc2626', img:'./honda xr 150 roja .png'},
+    {name:'Negro', hex:'#000000', img:'./Honda_XR_150 negra .png'},
+    {name:'blanco', hex:'#ffffff', img:'./honda xr 150 blanca.png'}
+    ] 
+    },
+
+     { id:'XR 190L 2.0 2027', name:'XR 190L 2.0 2027', price:13500000, 
+    colors:[
+    {name:'Roja', hex:'#dc2626', img:'./xr-190l-abs-rojo_3.png'},
+    {name:'Beige', hex:'#E5AA70', img:'./xr-190l-abs-beige_3.png'},
+    {name:'blanco', hex:'#ffffff', img:'./nueva-xr190l-abs-20-blanca.png'}
+    ] 
+    },
+
+
+     { id:'NX 190 2027', name:'NX 190 2027', price:14290000, 
+    colors:[
+    {name:'Rojo', hex:'#dc2626', img:'./NX 190 2027rojo.png'},
+    {name:'Negro', hex:'#000000', img:'./NX 190 2027negro.png'}
+    ] 
+    },
+    ]},
+
+    { grupo:'suzuki', brand:'suzuki', motos:[
+
+    { id:'GN 160', name:'GN 160', price:10130000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./GN 160negra.png'},
+    {name:'Gris', hex:'#64748b', img:'./GN 160gris.png'},
+    {name:'Rojo', hex: '#dc2626', img: './GN 160roja.png' }
+    ] 
+    },
+
+     { id:'BURGMAN 15 AUTOMATICA', name:'BURGMAN 15 AUTOMATICA', price:15150000, 
+    colors:[
+    {name:'Plateada', hex:'#e3e4e5', img:'./BURGMAN-15-PLATEADA.png'},
+    {name:'Negro', hex:'#000000', img:'./BURGMAN-15-NEGRA.png'},
+    {name:'Blanco', hex:'#ffffff', img:'./BURGMAN-15-BLANCA.png'}
+    ] 
+    },
+
+    { id:'DR 160X ENDURO', name:'DR 160X ENDURO', price:12599000, 
+    colors:[
+    {name:'Azul', hex:'#0000ff', img:'./dr160azul.png'},
+    {name:'Negro', hex:'#000000', img:'./DR-160-NEGRA.png'},
+    {name:'Blanco', hex:'#ffffff', img:'./DR-160-BLANCA.png'},
+    {name:'Rojo', hex: '#dc2626', img: './DR-160-ROJA.png' }
+    ] 
+    },
+
+    { id:'DR 150 ABS ENDURO', name:'DR 150 ABS ENDURO', price:10590000, 
+    colors:[
+    {name:'Gris', hex:'#CDCDCD', img:'./DR-150-GRIS-1385x800.png'},
+    {name:'Amarillo', hex:'#ffd200', img:'./DR-150-AMARILLA.png'},
+    {name:'Blanco', hex:'#ffffff', img:'./DR-160-BLANCA.png'},
+    {name:'Rojo', hex: '#dc2626', img: './DR-160-ROJA.png' }
+    ] 
+    },
+
+     { id:'AX4 ABS', name:'AX4 ABS', price:6050000, 
+    colors:[
+    {name:'Negro', hex:'#000000', img:'./AX4 ABSnegra.png'},
+    {name:'Azul', hex:'#1d4ed8', img:'./AX4 ABSazul.png'},
+    {name:'Blanco', hex:'#f8fafc', img: './AX4 ABSblanco.png'}
+    ] 
+    },
+
+    { id:'GN 125 ABS', name:'GN 125 ABS', price:7019000, 
+        colors:[
+        {name:'Naranja', hex: '#ea580c' , img:'./GN 125 ABSNaranja.png ' },  
+        {name:'Azul', hex: '#1d4ed8', img: './GN 125 ABSazul.png'},   
+        {name:'Rojo', hex: '#dc2626', img: './GN 125 ABSroja.png' },
+        {name:'Negro', hex:'#000000', img:'./GN 125 ABSnegra.png'}
+         ] 
+      },
+
+
+  ]}
+];
+
+const motosData = catalogo.flatMap(g => g.motos.map(m => ({...m, brand:g.brand})));
+const colorSeleccionadoPorMoto = {};
+let valorMotoGlobal = 0;
+let nombreMotoGlobal = "";
+
+function fmtCOP(n){ return "$" + Math.round(n).toLocaleString('es-CO') + " COP"; }
+
+function agrandarFoto(src){
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').style.display = 'flex';
+}
+
+function cerrarLightbox(){
+    document.getElementById('lightbox').style.display = 'none';
+}
+
+function cambiarColorTarjeta(motoId, colorObj, el){
+    colorSeleccionadoPorMoto[motoId] = colorObj.name;
+    const imgEl = document.getElementById(`img-${motoId}`);
+    if(imgEl){
+        imgEl.style.opacity = '0.2';
+        setTimeout(() => {
+            imgEl.src = colorObj.img;
+            imgEl.parentElement.setAttribute('onclick', `agrandarFoto('${colorObj.img}')`);
+            imgEl.style.opacity = '1';
+        }, 150);
+    }
+    const parent = el.closest('.colores-disponibles');
+    if(parent){
+        parent.querySelectorAll('.dot-color').forEach(dot => dot.classList.remove('active'));
+        el.classList.add('active');
+    }
+}
+
+function renderGrid(){
+    const container = document.getElementById('mainContainer');
+    container.innerHTML = "";
+    for(const grupo of catalogo){
+        const seccion = document.createElement('div');
+        seccion.className = 'grupo-marca';
+        seccion.setAttribute('data-marca', grupo.brand);
+
+        const titulo = document.createElement('div');
+        titulo.className = 'grupo-titulo';
+        titulo.innerText = 'Motos ' + grupo.grupo;
+        seccion.appendChild(titulo);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid-motos';
+
+        for(const moto of grupo.motos){
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            if(!colorSeleccionadoPorMoto[moto.id]){
+                colorSeleccionadoPorMoto[moto.id] = moto.colors[0].name;
+            }
+            const colorInicial = moto.colors.find(c => c.name === colorSeleccionadoPorMoto[moto.id]) || moto.colors[0];
+
+            let dotsHtml = "";
+            for(const color of moto.colors){
+                const isActive = color.name === colorInicial.name ? 'active' : '';
+                dotsHtml += `
+                    <div class="dot-color-wrap">
+                        <div class="dot-color ${isActive}" 
+                             style="background:${color.hex};" 
+                             title="${color.name}"
+                             onclick='cambiarColorTarjeta("${moto.id}", ${JSON.stringify(color)}, this)'>
+                        </div>
+                    </div>`;
+            }
+
+            card.innerHTML = `
+                <div>
+                    <div class="marca-tag">${grupo.grupo}</div>
+                    <h3>${moto.name}</h3>
+                    <div class="img-container" onclick="agrandarFoto('${colorInicial.img}')">
+                        <img id="img-${moto.id}" class="moto-img" src="${colorInicial.img}" alt="${moto.name}" loading="lazy">
+                        <span class="zoom-badge">🔍 Ampliar</span>
+                    </div>
+                    <div class="precio">${fmtCOP(moto.price)}</div>
+                    <div class="colores-disponibles">
+                        <span class="label">Colores Disponibles:</span>
+                        ${dotsHtml}
+                    </div>
+                </div>
+                <button class="btn-cotizar" onclick='abrirModal("${moto.id}")'>Solicitar Crédito</button>
+            `;
+            grid.appendChild(card);
+        }
+        seccion.appendChild(grid);
+        container.appendChild(seccion);
+    }
+}
+
+/* BUSCADOR EN TIEMPO REAL */
+function buscarMoto() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const tarjetas = document.querySelectorAll('.card');
+    
+    if (query !== "") {
+        document.querySelectorAll('.marca-btn').forEach(b => b.classList.remove('active'));
+    }
+
+    tarjetas.forEach(card => {
+        const textoCard = card.textContent.toLowerCase();
+        if (textoCard.includes(query)) {
+            card.style.display = "flex";
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    document.querySelectorAll('.grupo-marca').forEach(grupo => {
+        const motosVisibles = grupo.querySelectorAll('.card[style*="display: flex"]');
+        if (query === "") {
+            grupo.style.display = "block";
+        } else {
+            grupo.style.display = motosVisibles.length > 0 ? "block" : "none";
+        }
+    });
+}
+
+function navegar(paginaId, elemento){
+    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(paginaId).classList.add('active');
+    elemento.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function filtrarMarca(marca, btn){
+    document.getElementById('searchInput').value = "";
+    
+    document.querySelectorAll('.marca-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    document.querySelectorAll('.grupo-marca').forEach(sec => {
+        const coincide = (marca === 'todas' || sec.getAttribute('data-marca') === marca);
+        sec.style.display = coincide ? 'block' : 'none';
+        
+        sec.querySelectorAll('.card').forEach(card => {
+            card.style.display = "flex";
+        });
+    });
+}
+
+function abrirModal(motoId){
+    const moto = motosData.find(m => m.id === motoId);
+    if(!moto) return;
+    nombreMotoGlobal = moto.name;
+    valorMotoGlobal = moto.price;
+
+    document.getElementById('modalTitulo').innerText = "Cotizar " + moto.name;
+    document.getElementById('modalPrecioTexto').innerText = "Precio de contado: " + fmtCOP(moto.price);
+
+    const selectColor = document.getElementById('colorMoto');
+    selectColor.innerHTML = "";
+    
+    const colorPreseleccionado = colorSeleccionadoPorMoto[motoId] || moto.colors[0].name;
+
+    moto.colors.forEach(color => {
+        const option = document.createElement('option');
+        option.value = color.name;
+        option.innerText = color.name;
+        if(color.name === colorPreseleccionado) option.selected = true;
+        selectColor.appendChild(option);
+    });
+
+    document.getElementById('modalCotizacion').style.display = 'flex';
+    calcularCredito();
+}
+
+function cerrarModal(){
+    document.getElementById('modalCotizacion').style.display = 'none';
+    document.getElementById('formCotizacion').reset();
+}
+
+function calcularCredito(){
+    const dispone = document.getElementById('disponeCuota').value;
+    const grupoCuota = document.getElementById('grupoCuota');
+    let cuotaInicial = 0;
+
+    if(dispone === "Si"){
+        grupoCuota.style.display = 'block';
+        cuotaInicial = parseFloat(document.getElementById('montoCuota').value) || 0;
+    } else {
+        grupoCuota.style.display = 'none';
+        document.getElementById('montoCuota').value = 0;
+    }
+
+    if(cuotaInicial > valorMotoGlobal) {
+        cuotaInicial = valorMotoGlobal;
+        document.getElementById('montoCuota').value = valorMotoGlobal;
+    }
+
+    const montoFinanciar = valorMotoGlobal - cuotaInicial;
+    const meses = parseInt(document.getElementById('plazoMeses').value);
+    let cuotaMensual = 0;
+    if(montoFinanciar > 0){
+        cuotaMensual = (montoFinanciar * TASA_INTERES) / (1 - Math.pow(1 + TASA_INTERES, -meses));
+    }
+
+    document.getElementById('resValorMoto').innerText = fmtCOP(valorMotoGlobal);
+    document.getElementById('resCuotaInicial').innerText = "- " + fmtCOP(cuotaInicial);
+    document.getElementById('resMontoFinanciar').innerText = fmtCOP(montoFinanciar);
+    document.getElementById('resCuotaMensual').innerText = fmtCOP(cuotaMensual);
+}
+
+function enviarWhatsApp(e){
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value;
+    const cedula = document.getElementById('cedula').value;
+    const colorEscogido = document.getElementById('colorMoto').value;
+    const dispone = document.getElementById('disponeCuota').value;
+    const cuotaInicial = dispone === "Si" ? document.getElementById('montoCuota').value : "0";
+    const meses = document.getElementById('plazoMeses').value;
+    const cuotaMensual = document.getElementById('resCuotaMensual').innerText;
+
+    const mensaje = `Hola, quiero solicitar mi crédito para una moto:%0A%0A` +
+                    `🏍️ *Moto:* ${nombreMotoGlobal}%0A` +
+                    `💰 *Valor Moto:* ${fmtCOP(valorMotoGlobal)}%0A` +
+                    `🎨 *Color elegido:* ${colorEscogido}%0A` +
+                    `👤 *Nombre:* ${nombre}%0A` +
+                    `🪪 *Cédula:* ${cedula}%0A` +
+                    `💵 *Cuota Inicial:* $${parseInt(cuotaInicial).toLocaleString('es-CO')} COP%0A` +
+                    `📅 *Plazo:* ${meses} meses%0A` +
+                    `🏷️ *Cuota estimada:* ${cuotaMensual}/mes`;
+
+    window.open(`https://wa.me/${NUMERO_TELEFONO}?text=${mensaje}`, '_blank');
+    cerrarModal();
+}
+
+window.onclick = function(e){
+    if(e.target === document.getElementById('modalCotizacion')) cerrarModal();
+};
+
+renderGrid();
+</script>
+</body>
+</html>
